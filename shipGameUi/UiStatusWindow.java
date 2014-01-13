@@ -12,16 +12,17 @@ public class UiStatusWindow extends InterfaceComponent{
 	public UiStatusWindow(int i) {
 		super(i);
 		// TODO Auto-generated constructor stub
-		dataLine[0] = new UiDataLine("Ship Name");
-		dataLine[1] = new UiDataLine("Selected Component");
-		for(int b = 2; b < dataLine.length; b++){
+		for(int b = 0; b < dataLine.length; b++){
 			dataLine[b] = new UiDataLine("Test Line");
 		}
+		dataLine[0] = new UiDataLine("Ship Name");
+		dataLine[1] = new UiDataLine("Selected Component");
+		dataLine[2] = new UiDataLine("Position");
 	}
 
 	@Override
 	public float percentX() {
-		return .76f;
+		return .67f;
 	}
 
 	@Override
@@ -60,9 +61,11 @@ public class UiStatusWindow extends InterfaceComponent{
 		if(shipData != null){
 			dataLine[0].setData(shipData.toString());
 			dataLine[1].setData("Ship Selected");
+			dataLine[2].setData(shipData.getxPos() + " " + shipData.getyPos());
 		}else{
-			dataLine[0].setData("No Ship Selected");
-			dataLine[1].setData("No Ship Selected");
+			for(int i = 0; i < dataLine.length; i++){
+				dataLine[i].setData("no ship selected");
+			}
 		}
 		g.drawRect((int) xPos,(int) yPos,(int) ( endOfCx - xPos) , (int) (endOfCy - yPos));
 		for(int i = 0; i < dataLine.length; i++){

@@ -56,9 +56,9 @@ public class Ship {
 	}
 	
 	public void drawShip(Graphics g, float xDis, float yDis, float width){
-		int toScreenX = (int) MainApp.view.toScreenX(xPos);
-		int toScreenY = (int) MainApp.view.toScreenY(yPos);
-		g.drawString("Xpos = " + xPos + "Ypos =" + yPos,toScreenX,toScreenY);
+		//int toScreenX = (int) MainApp.view.toScreenX(xPos);
+		//int toScreenY = (int) MainApp.view.toScreenY(yPos);
+		//g.drawString("Xpos = " + xPos + "Ypos =" + yPos,toScreenX,toScreenY);
 		for(int i = 0; i < components.length; i ++){
 			for(int b = 0; b < components[0].length; b++){
 				if(components[i][b] != null){
