@@ -46,7 +46,7 @@ public abstract class InterfaceComponent {
 		return returnF;
 	}
 	
-	protected void centerText(String printOut, Graphics g, float l , float t, float r, float b){		
+	public static void centerText(String printOut, Graphics g, float l , float t, float r, float b){		
 		float textY = ( (b - t)/2.0f ) + t + (g.getFont().getSize2D()/2);
 		float textX = ( (r - l )/2.0f ) + l - (g.getFontMetrics(g.getFont()).stringWidth(printOut)/2.0f);
 		g.drawString(printOut, (int) textX, (int) textY);
