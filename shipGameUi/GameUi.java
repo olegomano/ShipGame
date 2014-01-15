@@ -16,10 +16,9 @@ public class GameUi implements UiInterface {
 	private float UI_START_X = 10;
 	private float UI_START_Y = 10;
 	//Create UIobject class and make an array of it here
-	InterfaceComponent uiComponents[] = {new EndButton(0), new UiStatusWindow(1)}; 
+	InterfaceComponent uiComponents[] = {new EndButton(0), new UiStatusWindow(1), new EndButton(2)}; 
 	
 	public void initializeUI() {
-		
 		resizeUi();
 	}
 		
@@ -59,15 +58,23 @@ public class GameUi implements UiInterface {
 		}
 		
 	}
-	
+	  
 	private void resizeUi(){
+		float uiSpaceOccupied = 0; 
+		for(int i = 0; i < uiComponents.length; i++){
+			uiSpaceOccupied += uiComponents[i].percentX() * (bottomX - topX);
+		}
+		float freeSpace = (bottomX - topX) - uiSpaceOccupied;
+		float xOffSet = freeSpace / ( uiComponents.length  + 1);
+		
 		for(int i = 0; i < uiComponents.length; i++){
 			if(i == 0){
-				uiComponents[i].resizeComponent(UI_START_X + topX, UI_START_Y+ topY, topX, topY, bottomX, bottomY);
+				float uiYpos = ( (bottomY - topY) * (1 - uiComponents[i].percentY() ) ) /2.0f + topY;
+				uiComponents[i].resizeComponent(xOffSet + topX, uiYpos, topX, topY, bottomX, bottomY);
 			}
 			else{
-				float previousX = uiComponents[i - 1].returnEnd()[0] + UI_START_X;
-				float previousY =  UI_START_Y+ topY;
+				float previousX = uiComponents[i - 1].returnEnd()[0] + xOffSet;
+				float previousY = ( (bottomY - topY) * (1 - uiComponents[i].percentY() ) ) /2.0f + topY;
 				System.out.println("PREV UI ELEMENT END: " + previousX +" " + previousY);
 				uiComponents[i].resizeComponent(previousX, previousY, topX, topY, bottomX, bottomY);
 			}
