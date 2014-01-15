@@ -1,5 +1,6 @@
 package shipGameUi;
 
+import java.awt.Font;
 import java.awt.Graphics;
 
 public class UiDataLine {
@@ -26,8 +27,13 @@ public class UiDataLine {
 	
 	public void drawSelf(Graphics g){
 		g.drawLine((int)l, (int)b,(int)r,(int)b);
+		Font f = new Font("TimesNewRoman", Font.PLAIN,(int) ( (b - t)*.76f ));
+		g.setFont(f);
+		//TODO: dynamically resize font based on size of bunding box
 		//g.drawString(name, (int) l, (int) t);
-		InterfaceComponent.centerText(name + ": " + data, g, l, t, r, b);
+		//InterfaceComponent.centerText(name + ": " + data, g, l, t, r, b);
+		float yOffset = ( (b - t) - g.getFont().getSize2D() )  / 2.0f;  
+		g.drawString("   " + name + ": " + data,(int)l,(int) (b - yOffset) );
 		
 	}
 	
