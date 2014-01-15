@@ -10,11 +10,11 @@ public class EndButton extends InterfaceComponent {
 	}
 
 	public float percentX() {
-		return .15f;
+		return .11f;
 	}
 
 	public float percentY() {
-		return .8f;
+		return (.78f);
 	}
 
 	public void drawSelf(Graphics g) {
