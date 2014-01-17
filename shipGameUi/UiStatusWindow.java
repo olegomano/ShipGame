@@ -7,6 +7,7 @@ import shipGameUi.UiInterface.BUTTON_CLICKED;
 
 public class UiStatusWindow extends InterfaceComponent{
 	private Ship shipData;
+	private String selectedComponent;
 	private int amountOfLines = 5;
 	private UiDataLine[] dataLine = new UiDataLine[amountOfLines];
 	public UiStatusWindow(int i) {
@@ -19,7 +20,6 @@ public class UiStatusWindow extends InterfaceComponent{
 		dataLine[1] = new UiDataLine("Selected Component");
 		dataLine[2] = new UiDataLine("Position");
 	}
-
 	@Override
 	public float percentX() {
 		return .67f;
@@ -32,6 +32,7 @@ public class UiStatusWindow extends InterfaceComponent{
 	
 	public synchronized void setDataToDisplay(Ship s){
 		shipData = s;
+		//selectedComponent = s.getSelectedComponent().componentName();
 		
 	}
 	
@@ -52,15 +53,15 @@ public class UiStatusWindow extends InterfaceComponent{
 	@Override
 	public float percentY() {
 		// TODO Auto-generated method stub
-		return .8f;
+		return .82f;
 	}
 	
 
 	@Override
-	public void drawSelf(Graphics g) {
+	public synchronized void drawSelf(Graphics g) {
 		if(shipData != null){
 			dataLine[0].setData(shipData.toString());
-			dataLine[1].setData("Ship Selected");
+			dataLine[1].setData(selectedComponent);
 			dataLine[2].setData(shipData.getxPos() + " " + shipData.getyPos());
 		}else{
 			for(int i = 0; i < dataLine.length; i++){
