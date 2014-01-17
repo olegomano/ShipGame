@@ -30,10 +30,8 @@ public class UiStatusWindow extends InterfaceComponent{
 		return BUTTON_CLICKED.NONE_CLICKED;
 	}
 	
-	public synchronized void setDataToDisplay(Ship s){
+	public void setDataToDisplay(Ship s){
 		shipData = s;
-		//selectedComponent = s.getSelectedComponent().componentName();
-		
 	}
 	
 	public void resizeComponent(float xPos, float yPos, float UiL, float UiT,
@@ -58,10 +56,10 @@ public class UiStatusWindow extends InterfaceComponent{
 	
 
 	@Override
-	public synchronized void drawSelf(Graphics g) {
+	public void drawSelf(Graphics g) {
 		if(shipData != null){
 			dataLine[0].setData(shipData.toString());
-			dataLine[1].setData(selectedComponent);
+			dataLine[1].setData(shipData.getSelectedComponent().componentName());
 			dataLine[2].setData(shipData.getxPos() + " " + shipData.getyPos());
 		}else{
 			for(int i = 0; i < dataLine.length; i++){
