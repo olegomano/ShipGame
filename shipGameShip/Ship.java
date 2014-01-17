@@ -55,6 +55,17 @@ public class Ship {
 		return false;
 	}
 	
+	public ShipComponent getSelectedComponent(){
+		for(int i = 0; i <  components.length; i++){
+			for(int b = 0; b < components[0].length; b++){
+				if(components[i][b].selected){
+					return components[i][b];
+				}
+			}
+		}
+		return null;
+	}
+	
 	public void drawShip(Graphics g, float xDis, float yDis, float width){
 		//int toScreenX = (int) MainApp.view.toScreenX(xPos);
 		//int toScreenY = (int) MainApp.view.toScreenY(yPos);
@@ -173,10 +184,13 @@ public class Ship {
 		}
 		for(int i = 0; i < components.length; i ++){
 			for(int b = 0; b < components[0].length; b++){
+				/*
 				if(conversionStringArray[i][b].compareTo("s") == 0){
 					//TODO: Create ShipComponent repository 
-					components[i][b] = new ShipComponent(i,b,this);
+					components[i][b] = new ShipComponentCockpit(i,b,this);
 				}
+				*/
+				components[i][b] = ShipComponentRepo.mthis.createComponent(conversionStringArray[i][b],i,b,this);
 			}
 		}
 		
