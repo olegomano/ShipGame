@@ -15,7 +15,7 @@ public class GameUi implements UiInterface {
 	private final float UI_VERTICAL_SIZE = .85f;
 	private float UI_START_X = 10;
 	private float UI_START_Y = 10;
-	//Create UIobject class and make an array of it here
+	//Create UIobject class an d make an array of it here
 	InterfaceComponent uiComponents[] = {new EndButton(0), new UiStatusWindow(1), new EndButton(2)}; 
 	
 	public void initializeUI() {
@@ -23,10 +23,17 @@ public class GameUi implements UiInterface {
 	}
 		
 	public BUTTON_CLICKED buttonClicked(float xClick, float yClick) {
-		for(int i = 0; i < uiComponents.length; i++){
-			return uiComponents[i].isClicked(xClick, yClick);
+		if(xClick > topX && xClick < bottomX){
+			if(yClick > topY && yClick < bottomY){
+				for(int i = 0; i < uiComponents.length; i++){
+					System.out.println("UI ELEMENT CLICKED");
+					return uiComponents[i].isClicked(xClick, yClick);
+				}
+				System.out.println("UI IS CLICKED");
+				return BUTTON_CLICKED.NO_ACTION;
+			}
 		}
-		return BUTTON_CLICKED.NONE_CLICKED;
+		return BUTTON_CLICKED.NONE_CLICKED;	
 		
 	}
 
@@ -66,6 +73,10 @@ public class GameUi implements UiInterface {
 		}
 		float freeSpace = (bottomX - topX) - uiSpaceOccupied;
 		float xOffSet = freeSpace / ( uiComponents.length  + 1);
+		
+		if(freeSpace < 0){
+			System.out.println("UI ERROR: elements take up more space than UI");
+		}
 		
 		for(int i = 0; i < uiComponents.length; i++){
 			if(i == 0){

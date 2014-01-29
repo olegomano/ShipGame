@@ -14,7 +14,9 @@ public abstract class InterfaceComponent {
 	protected float UiStartY;
 	protected int placeInUi;
 
+
 	public InterfaceComponent(int i) {
+		//TODO: make percentX, and percentY as part of constructor
 		placeInUi = i;
 	}
 
@@ -46,8 +48,11 @@ public abstract class InterfaceComponent {
 		return returnF;
 	}
 	
-	public static void centerText(String printOut, Graphics g, float l , float t, float r, float b){		
-		float textY = ( (b - t)/2.0f ) + t + (g.getFont().getSize2D()/2);
+	public static void centerText(String printOut, Graphics g, float l , float t, float r, float b){
+		int fontSize = (int) (( (r - l)/(printOut.length()) ) * 1.34);
+		Font f = new Font("TimesNewRoman", Font.PLAIN, fontSize );
+		g.setFont(f);
+		float textY = ( (b - t)/2.0f ) + t + (fontSize/2);
 		float textX = ( (r - l )/2.0f ) + l - (g.getFontMetrics(g.getFont()).stringWidth(printOut)/2.0f);
 		g.drawString(printOut, (int) textX, (int) textY);
 	}

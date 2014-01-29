@@ -4,21 +4,50 @@ import java.awt.Graphics;
 import shipGame.AppData;
 import shipGame.MainApp;
 import shipGameCommand.MoveCommand;
-public class ShipComponent {
+import shipGameWeapon.Weapon;
+import shipGameWeapon.WeaponRepo;
+public abstract class ShipComponent {
 	private int xPos;
 	private int yPos;
+	protected Weapon weapon;
 	//private float pixelWidth;
-	private Ship parentShip;
-	private boolean selected;
-	private float l;
-	private float t;
-	private float r;
-	private float b;
+	protected Ship parentShip;
+	protected boolean selected;
+	protected float l;
+	protected float t;
+	protected float r;
+	protected float b;
 	
-	public ShipComponent(int x, int y, Ship s){
+	public ShipComponent(){
+		//ONLY USE THIS FOR INITIATING IN COMMANDREPO
+	}
+	
+	public float getX(){
+		return l;
+	}
+	
+	
+	public float getY(){
+		return t;
+	}
+	public float[] getDem(){
+		float[] retF = {l,t,r,b};
+		return retF;
+	}
+	
+	public Weapon getWep(){
+		return weapon;
+	}
+	
+	public Ship getParent(){
+		return parentShip;
+	}
+	
+	public ShipComponent(int x, int y, Ship s, String w){
 		xPos = x;
 		yPos = y;
 		parentShip = s;
+		weapon = WeaponRepo.mThis.getWeapon(w, this);
 	}
 	
 	public void setSelected(boolean b){
@@ -29,6 +58,7 @@ public class ShipComponent {
 	public boolean isSelected(){
 		return selected;
 	}
+	
 	
 	public void drawSelf(Graphics g, float xDis, float yDis, float width){
 		float x = MainApp.view.getXDis();
@@ -44,6 +74,11 @@ public class ShipComponent {
 			g.drawOval((int) l , (int) t, (int)(r - l) ,(int)( b - t));
 			//System.out.println(yPos + " " + xPos);
 		}
+		String weaponS = "";
+		if(weapon != null){
+			weaponS += weapon.weaponT();
+		}
+		g.drawString(component() + " " + weaponS, (int) ( l +  (r - l) / 2),(int) ( t + (b - t) / 2));
 		
 	}
 	
@@ -55,11 +90,8 @@ public class ShipComponent {
 		}
 		return false;
 	}
-	
-	public void action(float x, float y){
-		System.out.println("Moving from " + l + " " + t + " to " + x + " " + y);
-		MoveCommand c = new MoveCommand(parentShip,MainApp.view.fromScreenX(x), MainApp.view.fromScreenY(y));
-		AppData.addCommand(c);
-		//TODO: CREATE COMMAND OBJECT AND CREATE MOVE COMMAND FROM THIS LOCATION
-	}
+	public abstract String component();
+	public abstract void action(float x, float y); // Recieved in Screen coordinates
+	public abstract String componentName();
+	public abstract ShipComponent createSelf(int x, int y, Ship s, String w);
 }

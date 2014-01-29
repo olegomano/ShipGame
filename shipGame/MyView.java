@@ -22,8 +22,8 @@ public class MyView extends JComponent {
 	private float bottomP = 0;
 	private UiInterface gameUI;
 	Timer fixedTimer = new Timer();
-	float timeInPhaseExecute = 0;
-	float timeInPhasePlan = 0;
+	public float timeInPhaseExecute = 0;
+	public float timeInPhasePlan = 0;
 	float previousTime = 0;
 	float currentTime = 0;
 	private int previousPhase = 0;
@@ -53,14 +53,19 @@ public class MyView extends JComponent {
 			Coordinate cord = appData.getCoordList().get(appData.getCoordList().size() - 1);
 			g.drawRect(cord.getX(), cord.getY(), (int) ( 10 + zoomFactor ),(int) ( 10 + zoomFactor) );
 		}
+		for(int i = 0; i < AppData.getProjectileArray().size(); i++){
+			//System.out.println(AppData.getProjectileArray().size());
+			AppData.getProjectileArray().get(i).drawSelf(g);
+		}
 		for(int i = 0; i < appData.getShips().length; i++){
 			appData.getShips()[i].drawShip(g , left, top, 40);
 		}
 		appData.drawCommandArray(g);
 		gameUI.drawUI(g);
+	}
 		//System.out.println(zoomFactor);
 
-	}
+	
 	
 	private void timerInit()
 	{
@@ -91,9 +96,18 @@ public class MyView extends JComponent {
 		if(AppData.GAME_PHASE == AppData.GAME_PHASES_LIST.EXECUTE){
 			timeInPhasePlan = 0;
 			timeInPhaseExecute = ( System.nanoTime() - AppData.GAME_PHASE_1_START_TIME ) / 1000000000.0f;
+			for(int c = 0; c < AppData.getProjectileArray().size(); c++){
+				if(AppData.getProjectileArray().get(c).completed()){
+					AppData.getProjectileArray().remove(c);
+					continue;
+				}
+				AppData.getProjectileArray().get(c).move(dt);
+			}
 			for(int b = 0; b < appData.getShips().length; b++){
 				appData.getShips()[b].moveShip(dt);
 			}
+			//CALCULATE COLLISION HERE
+
 			super.repaint();
 		}
 		if(timeInPhaseExecute > AppData.TURN_TIME){

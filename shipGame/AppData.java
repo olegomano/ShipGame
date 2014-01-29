@@ -1,16 +1,19 @@
 package shipGame;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import shipGameCommand.Command;
 import shipGameShip.Ship;
+import shipGameWeapon.WeaponProjetile;
 
 public class AppData {
 	private ArrayList<Coordinate> coords = new ArrayList<Coordinate>();
 	private static ArrayList<Command> commandList = new ArrayList<Command>();
+	private static LinkedList <WeaponProjetile> projectileList = new LinkedList<WeaponProjetile>();
 	public static final float TURN_TIME = 5;
 	public static final float PLAN_TIME = 10;
-	private String ship = "s,s,s,BREAK," +
+	private String ship = "d/w,s,s,BREAK," +
 						  "s, , ,BREAK," +
 						  " ,s, ,BREAK," +
 						  "s, ,s,BREAK,";
@@ -32,6 +35,14 @@ public class AppData {
 	
 	public static ArrayList<Command> getCommandArray(){
 		return commandList;
+	}
+	
+	public static LinkedList<WeaponProjetile> getProjectileArray(){
+		return projectileList;
+	}
+	
+	public static void addProjectile(WeaponProjetile wp){
+		projectileList.add(wp);
 	}
 	
 	public static void addCommand(Command c){

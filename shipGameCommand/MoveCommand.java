@@ -2,6 +2,7 @@ package shipGameCommand;
 import java.awt.Graphics;
 
 import shipGameShip.Ship;
+import shipGameShip.ShipComponent;
 
 
 public class MoveCommand extends Command{
@@ -9,8 +10,8 @@ public class MoveCommand extends Command{
 	private float myCurrentPojectedX;
 	private float myCurrentProjectedY;
 	private MovementPath move;
-	public MoveCommand(Ship s, float x, float y) {
-		super(s, x, y);
+	public MoveCommand(Ship s, ShipComponent sc, float x, float y) {
+		super(s, sc, x, y);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -25,11 +26,11 @@ public class MoveCommand extends Command{
 			move.complete();
 			return true;
 		}
-		float dx = targetShip.getxPos() - move.getPathPosition(t, targetShip)[0];
-		float dy = targetShip.getyPos() - move.getPathPosition(t, targetShip)[1];
+		float dx = targetShip.getxPos() - move.getPathPosition(t, targetShip.getxPos(), targetShip.getyPos(), targetShip.getMoveSpeed())[0];
+		float dy = targetShip.getyPos() - move.getPathPosition(t, targetShip.getxPos(), targetShip.getyPos(), targetShip.getMoveSpeed())[1];
 		//System.out.println("dx = " +  dx);
 		//System.out.println("dy = " + dy);
-		targetShip.displaceShip(move.getPathPosition(t, targetShip)[0], move.getPathPosition(t, targetShip)[1]);
+		targetShip.displaceShip(move.getPathPosition(t, targetShip.getxPos(), targetShip.getyPos(), targetShip.getMoveSpeed())[0],move.getPathPosition(t, targetShip.getxPos(), targetShip.getyPos(), targetShip.getMoveSpeed())[1]);
 		return false;
 	}
 	

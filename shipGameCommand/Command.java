@@ -2,18 +2,23 @@ package shipGameCommand;
 import java.awt.Graphics;
 
 import shipGameShip.Ship;
+import shipGameShip.ShipComponent;
 
 
 public abstract class Command {
 	protected Ship targetShip;
+	protected ShipComponent targetComponent;
 	protected float targetX;
 	protected float targetY;
 	protected boolean completed;
+	//TODO; add boolean consequtive
 	
-	public Command(Ship s, float x, float y){
+	public Command(Ship s, ShipComponent sc, float x, float y){
+		//x and y recieved in screen coordinates
 		targetShip = s;
 		targetX = x;
 		targetY = y;
+		targetComponent = sc;
 		queAction();
 	}
 	

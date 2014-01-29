@@ -66,7 +66,7 @@ public class MouseInputCollector implements MouseListener, MouseWheelListener {
 		v.repaint();
 	}
 
-	private void clickLogic(float xClick, float yClick, int button) {
+	private synchronized void clickLogic(float xClick, float yClick, int button) {
 		if (AppData.GAME_PHASE == AppData.GAME_PHASES_LIST.PLAN) {
 			gamePhasePlanLogic(xClick, yClick, button);
 		} else if (AppData.GAME_PHASE == AppData.GAME_PHASES_LIST.EXECUTE) {
@@ -84,6 +84,9 @@ public class MouseInputCollector implements MouseListener, MouseWheelListener {
 		//TODO make UI checker its own function wich reurns a boolean
 		switch(gameUI.buttonClicked(xClick, yClick)){
 		case END_TURN: endTurnButton();
+			return;
+		case NO_ACTION: clearSelect();
+			System.out.println("UI BUT NO BUTTON");
 			return;
 		default:
 			break; 
@@ -112,7 +115,7 @@ public class MouseInputCollector implements MouseListener, MouseWheelListener {
 			// If a ship component is selected it then calls its action using
 			// the click for its action
 			if (appData.getShips()[i].getSelected()) {
-				appData.getShips()[i].action(xClick, yClick);
+				appData.getShips()[i].action(xClick, yClick); // Sent in screen coordinates
 				return true;
 			}
 		}

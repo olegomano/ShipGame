@@ -7,7 +7,8 @@ import shipGameShip.Ship;
 public interface UiInterface {
 	public static enum BUTTON_CLICKED{
 		END_TURN,
-		NONE_CLICKED;
+		NONE_CLICKED,
+		NO_ACTION;
 	}
 	
 	public BUTTON_CLICKED buttonClicked(float xClick, float yClick);

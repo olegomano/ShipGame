@@ -30,7 +30,7 @@ public class Ship {
 	
 	
 	private ShipComponent[][] components;
-	
+	private ShipComponent selectedComponent;
 	private float xPos;
 	private float yPos;
 	private float projectedXPos;
@@ -56,6 +56,7 @@ public class Ship {
 	}
 	
 	public ShipComponent getSelectedComponent(){
+		/*
 		for(int i = 0; i <  components.length; i++){
 			for(int b = 0; b < components[0].length; b++){
 				if(components[i][b].selected){
@@ -63,7 +64,8 @@ public class Ship {
 				}
 			}
 		}
-		return null;
+		*/
+		return selectedComponent;
 	}
 	
 	public void drawShip(Graphics g, float xDis, float yDis, float width){
@@ -87,6 +89,7 @@ public class Ship {
 				}
 				if(components[i][b].isInside(x, y)){
 					components[i][b].setSelected(true);
+					selectedComponent = components[i][b];
 					return true;
 				}
 			}
@@ -184,13 +187,14 @@ public class Ship {
 		}
 		for(int i = 0; i < components.length; i ++){
 			for(int b = 0; b < components[0].length; b++){
-				/*
-				if(conversionStringArray[i][b].compareTo("s") == 0){
-					//TODO: Create ShipComponent repository 
-					components[i][b] = new ShipComponentCockpit(i,b,this);
+				String[] secondSplit = conversionStringArray[i][b].split("/");
+				
+				String weapon = null;
+				if(secondSplit.length > 1){
+					weapon = secondSplit[1];
+					System.out.println(weapon);
 				}
-				*/
-				components[i][b] = ShipComponentRepo.mthis.createComponent(conversionStringArray[i][b],i,b,this);
+				components[i][b] = ShipComponentRepo.mthis.createComponent(secondSplit[0],i,b,this,weapon);
 			}
 		}
 		

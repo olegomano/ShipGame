@@ -53,6 +53,11 @@ public class MovementPath {
 		return lengthSquared;
 	}
 	
+	public float[] getSlope(){
+		float[] retF = {dx,dy};
+		return retF;
+	}
+	
 	public float getXStart(){
 		return xStart;
 	}
@@ -61,15 +66,17 @@ public class MovementPath {
 		return yStart;
 	}
 		
-	public float[] getPathPosition(float dt, Ship c){
+	public float[] getPathPosition(float dt, float x, float y, float moveS){
 		//System.out.println(currentTime + " " + previousTime);
 		//System.out.println("dt = " + dt);
-		float moveThisTurnX = c.getxPos() + dt*dx*c.getMoveSpeed(); 
-		float moveThisTurnY = c.getyPos() + dt*dy*c.getMoveSpeed();
+		float moveThisTurnX =  x+  dt*dx*moveS; 
+		float moveThisTurnY =  y + dt*dy*moveS;
 		xCurrent = moveThisTurnX;
 		yCurrent = moveThisTurnY;
 		//float newX = (float) (xStart + ( t*dx ) * c.getMoveSpeed());
-		//float newY = (float) (yStart + ( t*dy ) * c.getMoveSpeed()); 
+		//float newY = (float) (yStart + ( t*dy ) * c.getMoveSpeed());
+		//System.out.println("dx = " + moveThisTurnX);
+		//System.out.println("dy = " + moveThisTurnY);
 		float[] returnf = {moveThisTurnX, moveThisTurnY};
 		return returnf;
 	}
