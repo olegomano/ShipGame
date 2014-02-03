@@ -97,6 +97,20 @@ public class Ship {
 		return false;
 	}
 	
+	public ShipComponent isInside(float x, float y){
+		for(int i = 0; i < components.length;i ++){
+			for(int b = 0; b < components[0].length; b++){
+				if(components[i][b] == null){
+					continue;
+				}
+				if(components[i][b].isInside(x, y)){
+					return components[i][b];
+				}
+			}
+		}
+		return null;
+	}
+	
 	public void clearSelect(){
 		for(int i = 0; i < components.length; i++){
 			for(int b = 0; b < components[0].length; b++){
@@ -106,6 +120,8 @@ public class Ship {
 			}
 		}
 	}
+	
+	
 		
 	
 	public void moveShip(float dt){
