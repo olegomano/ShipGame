@@ -148,6 +148,9 @@ public class MyView extends JComponent {
 			//The Game_Phase is forcibly set to execute
 			AppData.GAME_PHASE_1_START_TIME = System.nanoTime();
 			AppData.GAME_PHASE = AppData.GAME_PHASES_LIST.EXECUTE;
+			for(int d = 0; d < appData.getShips().length; d++){
+				appData.getShips()[d].createInternalCommandLists();
+			}
 			super.repaint();
 		}
 	}

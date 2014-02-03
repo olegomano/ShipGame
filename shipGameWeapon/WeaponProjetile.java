@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import shipGame.MainApp;
 import shipGameCommand.MovementPath;
+import shipGameShip.Ship;
 
 public class WeaponProjetile {
 	private MovementPath mPath;
@@ -14,11 +15,13 @@ public class WeaponProjetile {
 	private float yStart;
 	private float xPosEnd;
 	private float yPosEnd;
+	private Ship sourceOf;
 	
 	
-	public WeaponProjetile(float xStart, float yStart, float xEnd, float yEnd, float speed){
+	public WeaponProjetile(float xStart, float yStart, float xEnd, float yEnd, float speed, Ship source){
 		xPos = MainApp.view.fromScreenX(xStart);
 		yPos = MainApp.view.fromScreenY(yStart);
+		sourceOf = source;
 		xStart = xPos;
 		yStart = yPos;
 		xPosEnd = xEnd;
@@ -34,6 +37,17 @@ public class WeaponProjetile {
 		yPos = mPath.getPathPosition(dt,xPos, yPos, speed)[1];
 	}
 	
+	public Ship getSource(){
+		return sourceOf;
+	}
+	
+	public float getX(){
+		return xPos;
+	}
+	
+	public float getY(){
+		return yPos;
+	}
 	
 	public void drawSelf(Graphics g){
 		//System.out.println("DRAWINGPROJECTILE");
@@ -42,7 +56,8 @@ public class WeaponProjetile {
 		float xEnd = MainApp.view.toScreenX (xPos +  mPath.getSlope()[0]*20 );
 		float yEnd = MainApp.view.toScreenY (yPos + mPath.getSlope()[1]*20 );
 		g.drawLine((int) xStart, (int) yStart, (int) xEnd, (int) yEnd);
-		g.drawString( mPath.getSlope()[0] + " " + mPath.getSlope()[1], (int) xStart, (int) yStart);
+		//g.drawString( mPath.getSlope()[0] + " " + mPath.getSlope()[1], (int) xStart, (int) yStart);
+		g.drawString((int) xPos + " " + (int)yPos, (int) xStart, (int) yStart);
 		//g.drawLine( (int) this.xStart, (int) this.yStart, (int) xEnd, (int) yEnd);
 	} 
 	

@@ -107,6 +107,9 @@ public class MouseInputCollector implements MouseListener, MouseWheelListener {
 		//Sets start Time for Phase 1
 		AppData.GAME_PHASE = AppData.GAME_PHASES_LIST.EXECUTE;
 		AppData.GAME_PHASE_1_START_TIME = System.nanoTime();
+		for(int d = 0; d < appData.getShips().length; d++){
+			appData.getShips()[d].createInternalCommandLists();
+		}
 	}
 	
 	private boolean callShipAction(float xClick, float yClick){

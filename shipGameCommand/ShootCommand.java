@@ -12,14 +12,15 @@ public class ShootCommand extends Command{
 	private WeaponProjetile wepProj;
 	private float timeOfLastShot = 0;
 	private WeaponProjetile[] projArray;
+	private Ship sourceShip;
 	public ShootCommand(Ship s, ShipComponent sc, float x, float y) {
 		// x and y recieved in screenCoordinates
 		super(s, sc, x, y);
+		sourceShip = s; 
 		//timeTillNextShot = sc.getWep().getFireSpeed();
 		System.out.println("Created Shoot Command");
 		// TODO Auto-generated constructor stub
 	}
-	//TODO: CREATE SEPERATE TIMER FOR EACH COMMAND
 	
 	private float count = 0;
 	public boolean executeAction(float dt) {
@@ -31,7 +32,7 @@ public class ShootCommand extends Command{
 			//float y = targetComponent.getDem()[1] + ( targetComponent.getDem()[3] - targetComponent.getDem()[1]) / 2;
 			float x = targetComponent.getX();
 			float y = targetComponent.getY(); 
-			wepProj = new WeaponProjetile(x,y,targetX,targetY, targetComponent.getWep().getVelocity() );
+			wepProj = new WeaponProjetile(x,y,targetX,targetY, targetComponent.getWep().getVelocity(), sourceShip);
 			AppData.addProjectile(wepProj);
 			System.out.println("Active Projectiles: " + AppData.getProjectileArray().size());
 		}
@@ -63,6 +64,10 @@ public class ShootCommand extends Command{
 		else if(AppData.GAME_PHASE == AppData.GAME_PHASES_LIST.EXECUTE){
 			
 		}
+	}
+	@Override
+	protected boolean asynchCommand() {
+		return true;
 	}
 
 }

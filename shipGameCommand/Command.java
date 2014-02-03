@@ -11,6 +11,8 @@ public abstract class Command {
 	protected float targetX;
 	protected float targetY;
 	protected boolean completed;
+	
+	protected abstract boolean asynchCommand();
 	//TODO; add boolean consequtive
 	
 	public Command(Ship s, ShipComponent sc, float x, float y){
@@ -25,6 +27,11 @@ public abstract class Command {
 	public boolean isCompleted(){
 		return completed;
 	}
+	
+	public boolean isAsynchCommand(){
+		return asynchCommand();
+	}
+	
 	
 	public Ship getTargetShip(){
 		return targetShip;

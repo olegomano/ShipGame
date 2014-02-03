@@ -9,7 +9,7 @@ import shipGameShip.ShipComponent;
 
 public class Weapon {
 	private ShipComponent parentSc;
-	private float fireSpeed = 1;
+	private float fireSpeed = .87f;
 	private float timeTillNextShot = fireSpeed;
 	private float projVelocity = 100;
 	

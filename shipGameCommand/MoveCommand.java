@@ -56,4 +56,9 @@ public class MoveCommand extends Command{
 		move = new MovementPath(myCurrentPojectedX, myCurrentProjectedY, targetX, targetY);
 				
 	}
+
+	@Override
+	protected boolean asynchCommand() {
+		return false;
+	}
 }

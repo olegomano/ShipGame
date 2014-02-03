@@ -94,7 +94,7 @@ public abstract class ShipComponent {
 		if(dead){
 			return false;
 		}
-		System.out.println("Is " + x + " " + y + " Inside " + l + " " + r);
+		//System.out.println("Is " + x + " " + y + " Inside " + l + " " + r);
 		if(x > l && x < r){
 			if(y > t && y < b){
 				return true;

@@ -1,8 +1,10 @@
 package shipGameShip;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import shipGame.AppData;
 import shipGame.MainApp;
+import shipGameCommand.Command;
 
 
 public class Ship {
@@ -31,6 +33,8 @@ public class Ship {
 	
 	private ShipComponent[][] components;
 	private ShipComponent selectedComponent;
+	private ArrayList<Command> asynchCommands = new ArrayList<Command>();
+	private ArrayList<Command> synchCommands  = new ArrayList<Command>();
 	private float xPos;
 	private float yPos;
 	private float projectedXPos;
@@ -122,14 +126,31 @@ public class Ship {
 	}
 	
 	
-		
+	public void createInternalCommandLists(){
+		for(int i = 0; i < AppData.getCommandArray().size(); i++){
+			if(AppData.getCommandArray().get(i) == null){
+				System.out.println("COMMAND IS NULL");
+				return;
+			}
+			System.out.println("COMMAND IS NOT NULL");
+			if(AppData.getCommandArray().get(i).isAsynchCommand()){
+				
+				asynchCommands.add(AppData.getCommandArray().get(i));
+			}
+			else{
+				synchCommands.add(AppData.getCommandArray().get(i));
+			}
+		}
+		System.out.println("There are " + synchCommands.size() + " Synch Commands");
+		System.out.println("There are " + asynchCommands.size() + " Asynch Commands");
+	}
 	
 	public void moveShip(float dt){
 		float timeInSeconds = dt; //TODO: Do this before move is called
 		//System.out.println(this.toString());
-		if(AppData.getCommandArray().size() > 0 && completedCommands < AppData.getCommandArray().size()){
-			if(AppData.getCommandArray().get(completedCommands).getTargetShip() == this){
-				if(AppData.getCommandArray().get(completedCommands).executeAction(timeInSeconds)){
+		if(synchCommands.size() > 0 && completedCommands < synchCommands.size()){
+			if(synchCommands.get(completedCommands).getTargetShip() == this){
+				if(synchCommands.get(completedCommands).executeAction(timeInSeconds)){
 					completedCommands++;
 				}
 			}
@@ -137,6 +158,11 @@ public class Ship {
 				completedCommands++;
 			}
 			
+		}
+		if(asynchCommands.size() > 0){
+			for(int i = 0; i < asynchCommands.size(); i++){
+				asynchCommands.get(i).executeAction(dt);
+			}
 		}
 	}
 	
