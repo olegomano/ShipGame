@@ -6,6 +6,7 @@ import java.util.TimerTask;
 
 import javax.swing.JComponent;
 
+import shipGameShip.ShipComponent;
 import shipGameUi.UiInterface;
 
 
@@ -58,7 +59,12 @@ public class MyView extends JComponent {
 			AppData.getProjectileArray().get(i).drawSelf(g);
 		}
 		for(int i = 0; i < appData.getShips().length; i++){
-			appData.getShips()[i].drawShip(g , left, top, 40);
+			if(appData.getShips()[i] == null){
+				
+			}
+			else{
+				appData.getShips()[i].drawShip(g , left, top, 40);
+			}
 		}
 		appData.drawCommandArray(g);
 		gameUI.drawUI(g);
@@ -106,7 +112,25 @@ public class MyView extends JComponent {
 			for(int b = 0; b < appData.getShips().length; b++){
 				appData.getShips()[b].moveShip(dt);
 			}
-			//CALCULATE COLLISION HERE
+			for(int c = 0; c < AppData.getProjectileArray().size(); c++){
+				for(int b = 0; b < appData.getShips().length; b++){
+					if(appData.getShips()[b] == null){
+						return;
+					}
+					ShipComponent hitComp = appData.getShips()[b].isInside(MainApp.view.toScreenX(AppData.getProjectileArray().get(c).getX()), MainApp.view.toScreenY(AppData.getProjectileArray().get(c).getY()));{
+						if(hitComp != null){
+							if( hitComp.getParent() != AppData.getProjectileArray().get(c).getSource()){
+								AppData.getProjectileArray().remove(c);
+								System.out.println("HITHITHIT");
+								hitComp.destroyComponent();
+							}
+						}
+						else{
+							continue;
+						}
+					}
+				}
+			}
 
 			super.repaint();
 		}
