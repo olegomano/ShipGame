@@ -17,6 +17,7 @@ public abstract class ShipComponent {
 	protected float t;
 	protected float r;
 	protected float b;
+	protected boolean dead;
 	
 	public ShipComponent(){
 		//ONLY USE THIS FOR INITIATING IN COMMANDREPO
@@ -24,6 +25,10 @@ public abstract class ShipComponent {
 	
 	public float getX(){
 		return l;
+	}
+	
+	public void destroyComponent(){
+		dead = true;
 	}
 	
 	
@@ -61,6 +66,9 @@ public abstract class ShipComponent {
 	
 	
 	public void drawSelf(Graphics g, float xDis, float yDis, float width){
+		if(dead){
+			return;
+		}
 		float x = MainApp.view.getXDis();
 		float y = MainApp.view.getYDis();
 		l =  MainApp.view.toScreenX(parentShip.getxPos() + xPos*width);
@@ -83,6 +91,10 @@ public abstract class ShipComponent {
 	}
 	
 	public boolean isInside(float x, float y){
+		if(dead){
+			return false;
+		}
+		System.out.println("Is " + x + " " + y + " Inside " + l + " " + r);
 		if(x > l && x < r){
 			if(y > t && y < b){
 				return true;
