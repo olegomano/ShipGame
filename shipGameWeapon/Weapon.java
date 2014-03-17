@@ -12,6 +12,8 @@ public class Weapon {
 	private float fireSpeed = .87f;
 	private float timeTillNextShot = fireSpeed;
 	private float projVelocity = 100;
+	private boolean firedThisTurn;
+	
 	
 	public Weapon(ShipComponent sc){
 		parentSc = sc;
@@ -19,8 +21,15 @@ public class Weapon {
 	public void fireWeapon(float x, float y)
 	{
 		//x and y recieved in screen coordinates
-		ShootCommand shoot = new ShootCommand(parentSc.getParent(), parentSc, MainApp.view.fromScreenX(x),MainApp.view.fromScreenY(y));
-		AppData.addCommand(shoot);
+		if(!firedThisTurn){
+			ShootCommand shoot = new ShootCommand(parentSc.getParent(), parentSc, MainApp.view.fromScreenX(x),MainApp.view.fromScreenY(y));
+			AppData.addCommand(shoot);
+			firedThisTurn = true;
+		}
+	}
+	
+	public void clearTurnEnd(){
+		firedThisTurn = false;
 	}
 	
 	public float getVelocity(){

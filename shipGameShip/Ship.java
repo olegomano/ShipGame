@@ -33,8 +33,8 @@ public class Ship {
 	
 	private ShipComponent[][] components;
 	private ShipComponent selectedComponent;
-	private ArrayList<Command> asynchCommands = new ArrayList<Command>();
-	private ArrayList<Command> synchCommands  = new ArrayList<Command>();
+	private static ArrayList<Command> asynchCommands = new ArrayList<Command>();
+	private static ArrayList<Command> synchCommands  = new ArrayList<Command>();
 	private float xPos;
 	private float yPos;
 	private float projectedXPos;
@@ -145,6 +145,11 @@ public class Ship {
 		System.out.println("There are " + asynchCommands.size() + " Asynch Commands");
 	}
 	
+	public void clearInernalArrays(){
+		asynchCommands.clear();
+		synchCommands.clear();
+	}
+	
 	public void moveShip(float dt){
 		float timeInSeconds = dt; //TODO: Do this before move is called
 		//System.out.println(this.toString());
@@ -161,7 +166,9 @@ public class Ship {
 		}
 		if(asynchCommands.size() > 0){
 			for(int i = 0; i < asynchCommands.size(); i++){
-				asynchCommands.get(i).executeAction(dt);
+				if(asynchCommands.get(i).getTargetShip() == this){
+					asynchCommands.get(i).executeAction(dt);
+				}
 			}
 		}
 	}
@@ -170,6 +177,7 @@ public class Ship {
 		completedCommands = 0;
 		projectedXPos = xPos;
 		projectedYPos = yPos;
+		clearInernalArrays();
 	}
 	
 	public void displaceShip(float x, float y){

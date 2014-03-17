@@ -13,11 +13,11 @@ public class AppData {
 	private static LinkedList <WeaponProjetile> projectileList = new LinkedList<WeaponProjetile>();
 	public static final float TURN_TIME = 5;
 	public static final float PLAN_TIME = 10;
-	private String ship = "d/w,s,s,BREAK," +
+	private static String ship = "d/w,s,s,BREAK," +
 						  "s, , ,BREAK," +
 						  " ,s, ,BREAK," +
 						  "s, ,s,BREAK,";
-	private Ship[] testShip = {new Ship(100, 100, ship) , new Ship(100,500, ship)};
+	private static Ship[] testShip = new Ship[2];
 	public static GAME_PHASES_LIST GAME_PHASE = GAME_PHASES_LIST.PLAN;
 	public static enum GAME_PHASES_LIST{
 		PLAN,
@@ -91,8 +91,10 @@ public class AppData {
 		return testShip;
 	}
 
-	private void createShips() {
+	public static void createShips() {
 		//SHIP CREATION TO HAPPEN HERE
+		testShip[0] = new Ship(100, 100, ship);
+		testShip[1] = new Ship(100,500, ship);
 	}
 
 }
